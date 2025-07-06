@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddControllers();
 
 // Add Entity Framework
 builder.Services.AddDbContext<AcademyDbContext>(options =>
@@ -48,6 +49,8 @@ app.UseAuthorization();
 app.MapStaticAssets();
 app.MapRazorPages()
    .WithStaticAssets();
+
+app.MapControllers();
 
 // Initialize database
 using (var scope = app.Services.CreateScope())

@@ -70,68 +70,70 @@
 <!-- Courses Grid Section -->
 <section class="py-12 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Loading indicator -->
-        <div id="loadingIndicator" class="text-center py-8" style="display: none;">
-            <div class="inline-flex items-center">
-                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-primary-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                Зареждане на курсове...
+        @if (ViewData["ErrorMessage"] != null)
+        {
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
+                <strong>Грешка:</strong> @ViewData["ErrorMessage"]
             </div>
-        </div>
+        }
         
-        <!-- Courses Grid -->
-        <div id="coursesGrid" 
-             class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-             hx-get="/api/courses" 
-             hx-trigger="load"
-             hx-target="this"
-             hx-swap="innerHTML"
-             hx-indicator="#loadingIndicator">
-            <!-- Loading state -->
-            <div class="animate-pulse">
-                <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                    <div class="bg-gray-200 h-48"></div>
-                    <div class="p-6">
-                        <div class="h-4 bg-gray-200 rounded mb-2"></div>
-                        <div class="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
-                        <div class="h-4 bg-gray-200 rounded w-1/2"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="animate-pulse">
-                <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                    <div class="bg-gray-200 h-48"></div>
-                    <div class="p-6">
-                        <div class="h-4 bg-gray-200 rounded mb-2"></div>
-                        <div class="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
-                        <div class="h-4 bg-gray-200 rounded w-1/2"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="animate-pulse">
-                <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                    <div class="bg-gray-200 h-48"></div>
-                    <div class="p-6">
-                        <div class="h-4 bg-gray-200 rounded mb-2"></div>
-                        <div class="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
-                        <div class="h-4 bg-gray-200 rounded w-1/2"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @{
+            var courses = ViewData["Courses"] as IEnumerable<Academy.Core.Models.Course>;
+        }
         
-        <!-- No courses message -->
-        <div id="noCoursesMessage" class="text-center py-12" style="display: none;">
-            <div class="text-gray-500">
-                <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-                <h3 class="text-lg font-medium text-gray-900 mb-2">Няма намерени курсове</h3>
-                <p class="text-gray-500">Опитайте да промените филтрите или се върнете по-късно.</p>
+        @if (courses != null && courses.Any())
+        {
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                @foreach (var course in courses)
+                {
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                        <div class="relative">
+                            @if (!string.IsNullOrEmpty(course.ImageUrl))
+                            {
+                                <img src="@course.ImageUrl" alt="@course.Title" class="w-full h-48 object-cover">
+                            }
+                            else
+                            {
+                                <div class="w-full h-48 bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center">
+                                    <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                    </svg>
+                                </div>
+                            }
+                            <div class="absolute top-4 right-4">
+                                <span class="bg-primary-600 text-white px-2 py-1 rounded-full text-xs font-medium">@course.Category</span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold text-gray-900 mb-2">@course.Title</h3>
+                            <p class="text-gray-600 mb-4">@course.Description</p>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-sm text-gray-500">@course.Level</span>
+                                <span class="text-sm text-gray-500">@course.Duration</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-2xl font-bold text-primary-600">@course.Price.ToString("C")</span>
+                                <a href="/Courses/Details/@course.Id" class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors">
+                                    Детайли
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
-        </div>
+        }
+        else
+        {
+            <div class="text-center py-12">
+                <div class="text-gray-500">
+                    <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <h3 class="text-lg font-medium text-gray-900 mb-2">Няма намерени курсове</h3>
+                    <p class="text-gray-500">Моментно няма активни курсове. Моля, проверете отново по-късно.</p>
+                </div>
+            </div>
+        }
     </div>
 </section>
 
@@ -163,30 +165,18 @@
 
 @section Scripts {
     <script>
-        // HTMX event handlers
-        document.addEventListener('htmx:beforeRequest', function(evt) {
-            document.getElementById('loadingIndicator').style.display = 'block';
-        });
-        
-        document.addEventListener('htmx:afterRequest', function(evt) {
-            document.getElementById('loadingIndicator').style.display = 'none';
-        });
-        
-        // Filter change handlers
+        // Simple filter functionality (can be enhanced later)
         document.getElementById('categoryFilter').addEventListener('change', function() {
-            const category = this.value;
-            const url = category ? `/api/courses/category/${category}` : '/api/courses';
-            
-            htmx.ajax('GET', url, {
-                target: '#coursesGrid',
-                swap: 'innerHTML'
-            });
+            // For now, just log the change. Can be enhanced with AJAX later
+            console.log('Category filter changed:', this.value);
         });
         
         document.getElementById('levelFilter').addEventListener('change', function() {
-            const level = this.value;
-            // This would need to be implemented in the API
-            console.log('Level filter changed:', level);
+            console.log('Level filter changed:', this.value);
+        });
+        
+        document.getElementById('sortFilter').addEventListener('change', function() {
+            console.log('Sort filter changed:', this.value);
         });
     </script>
 } 

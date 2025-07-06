@@ -2,10 +2,10 @@ using Academy.Application.Services;
 using Academy.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Academy.API.Controllers;
+namespace Academy.Web.Controllers;
 
-[ApiController]
 [Route("api/[controller]")]
+[ApiController]
 public class ContactController : ControllerBase
 {
     private readonly IContactService _contactService;

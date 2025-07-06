@@ -1,12 +1,12 @@
 using Academy.Application.Services;
 using Academy.Core.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
-namespace Academy.API.Controllers;
+namespace Academy.Web.Controllers;
 
-[ApiController]
 [Route("api/[controller]")]
-public class CoursesController : ControllerBase
+public class CoursesController : Controller
 {
     private readonly ICourseService _courseService;
 
@@ -171,5 +171,15 @@ public class CoursesController : ControllerBase
         {
             return StatusCode(500, new { message = "An error occurred while deleting the course", error = ex.Message });
         }
+    }
+
+    [HttpGet("featuredpartial")]
+    public async Task<IActionResult> FeaturedPartial()
+    {
+        var courses = (await _courseService.GetActiveCoursesAsync())
+            .OrderByDescending(c => c.CreatedAt)
+            .Take(3)
+            .ToList();
+        return PartialView("~/Pages/Shared/_CoursesPartial.cshtml", courses);
     }
 } 
