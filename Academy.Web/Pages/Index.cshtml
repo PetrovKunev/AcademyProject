@@ -1,0 +1,210 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Начало";
+    ViewData["Description"] = "Академия - Вашият партньор за професионално обучение и развитие на умения. Открийте нашите курсове по програмиране, дизайн и бизнес.";
+    ViewData["Keywords"] = "академия, курсове, обучение, програмиране, дизайн, бизнес, софия";
+}
+
+<!-- Hero Section -->
+<section class="relative bg-gradient-to-r from-primary-600 to-primary-700 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div class="text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                Добре дошли в <span class="text-yellow-300">Академията</span>
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 text-primary-100 max-w-3xl mx-auto">
+                Вашият партньор за професионално обучение и развитие на умения. 
+                Открийте курсове, които ще ви помогнат да постигнете вашите цели.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="/Courses" class="bg-yellow-400 text-gray-900 px-8 py-3 rounded-lg font-semibold hover:bg-yellow-300 transition-colors">
+                    Разгледайте курсове
+                </a>
+                <a href="/Contact" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-primary-600 transition-colors">
+                    Свържете се с нас
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Decorative elements -->
+    <div class="absolute top-0 left-0 w-full h-full overflow-hidden">
+        <div class="absolute -top-40 -right-40 w-80 h-80 bg-primary-500 rounded-full opacity-20"></div>
+        <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-yellow-400 rounded-full opacity-20"></div>
+    </div>
+</section>
+
+<!-- Featured Courses Section -->
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Популярни курсове
+            </h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                Открийте нашите най-популярни курсове, които ще ви помогнат да развиете вашите умения
+            </p>
+        </div>
+        
+        <!-- Course Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" 
+             hx-get="/api/courses" 
+             hx-trigger="load"
+             hx-target="this"
+             hx-swap="innerHTML">
+            <!-- Loading state -->
+            <div class="animate-pulse">
+                <div class="bg-gray-200 h-48 rounded-lg mb-4"></div>
+                <div class="h-4 bg-gray-200 rounded mb-2"></div>
+                <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+            </div>
+            <div class="animate-pulse">
+                <div class="bg-gray-200 h-48 rounded-lg mb-4"></div>
+                <div class="h-4 bg-gray-200 rounded mb-2"></div>
+                <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+            </div>
+            <div class="animate-pulse">
+                <div class="bg-gray-200 h-48 rounded-lg mb-4"></div>
+                <div class="h-4 bg-gray-200 rounded mb-2"></div>
+                <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-12">
+            <a href="/Courses" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 transition-colors">
+                Вижте всички курсове
+                <svg class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Защо да изберете нас?
+            </h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                Ние предлагаме качествено обучение с експерти в областта
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="text-center">
+                <div class="bg-primary-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Качествено съдържание</h3>
+                <p class="text-gray-600">Нашите курсове са разработени от експерти в областта с актуално и практично съдържание.</p>
+            </div>
+            
+            <div class="text-center">
+                <div class="bg-primary-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Опитни преподаватели</h3>
+                <p class="text-gray-600">Нашите преподаватели са професионалисти с дългогодишен опит в индустрията.</p>
+            </div>
+            
+            <div class="text-center">
+                <div class="bg-primary-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Сертификат</h3>
+                <p class="text-gray-600">Получете сертификат за завършване на курса, който ще удостовери вашите умения.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Какво казват нашите студенти
+            </h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                Открийте как нашите курсове са помогнали на други да постигнат успех
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-gray-50 p-6 rounded-lg">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-primary-600 rounded-full flex items-center justify-center text-white font-semibold">
+                        МП
+                    </div>
+                    <div class="ml-4">
+                        <h4 class="font-semibold text-gray-900">Мария Петрова</h4>
+                        <p class="text-gray-600">Frontend Developer</p>
+                    </div>
+                </div>
+                <p class="text-gray-700">
+                    "Курсът по React.js ми помогна да намеря работа като разработчик. Преподавателите са отлично подготвени и материалите са много полезни."
+                </p>
+            </div>
+            
+            <div class="bg-gray-50 p-6 rounded-lg">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-primary-600 rounded-full flex items-center justify-center text-white font-semibold">
+                        ИС
+                    </div>
+                    <div class="ml-4">
+                        <h4 class="font-semibold text-gray-900">Иван Стоянов</h4>
+                        <p class="text-gray-600">UX Designer</p>
+                    </div>
+                </div>
+                <p class="text-gray-700">
+                    "Курсът по UX/UI дизайн ми даде необходимите умения за работа в сферата. Практическите проекти бяха много полезни."
+                </p>
+            </div>
+            
+            <div class="bg-gray-50 p-6 rounded-lg">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-primary-600 rounded-full flex items-center justify-center text-white font-semibold">
+                        АГ
+                    </div>
+                    <div class="ml-4">
+                        <h4 class="font-semibold text-gray-900">Анна Георгиева</h4>
+                        <p class="text-gray-600">Project Manager</p>
+                    </div>
+                </div>
+                <p class="text-gray-700">
+                    "Курсът по управление на проекти ми помогна да развия лидерски умения и да постигна по-добри резултати в работата."
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-16 bg-primary-600 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">
+            Готови ли сте да започнете?
+        </h2>
+        <p class="text-xl mb-8 text-primary-100 max-w-2xl mx-auto">
+            Присъединете се към нашите курсове и развийте вашите умения с експерти в областта
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="/Courses" class="bg-white text-primary-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                Разгледайте курсове
+            </a>
+            <a href="/Contact" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-primary-600 transition-colors">
+                Свържете се с нас
+            </a>
+        </div>
+    </div>
+</section>

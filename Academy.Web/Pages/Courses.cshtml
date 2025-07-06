@@ -1,0 +1,192 @@
+@page
+@model CoursesModel
+@{
+    ViewData["Title"] = "Курсове";
+    ViewData["Description"] = "Разгледайте нашите курсове по програмиране, дизайн и бизнес. Намерете курса, който отговаря на вашите нужди.";
+    ViewData["Keywords"] = "курсове, програмиране, дизайн, бизнес, обучение, академия";
+}
+
+<!-- Header Section -->
+<section class="bg-gradient-to-r from-primary-600 to-primary-700 text-white py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Нашите курсове</h1>
+            <p class="text-xl text-primary-100 max-w-2xl mx-auto">
+                Открийте курсове, които ще ви помогнат да развиете вашите умения и да постигнете вашите цели
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Filters Section -->
+<section class="py-8 bg-white border-b">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+            <div class="flex flex-wrap gap-4">
+                <select id="categoryFilter" 
+                        class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                        hx-get="/api/courses"
+                        hx-target="#coursesGrid"
+                        hx-trigger="change"
+                        hx-include="[name='category']">
+                    <option value="">Всички категории</option>
+                    <option value="programming">Програмиране</option>
+                    <option value="design">Дизайн</option>
+                    <option value="business">Бизнес</option>
+                    <option value="marketing">Маркетинг</option>
+                </select>
+                
+                <select id="levelFilter" 
+                        class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                        hx-get="/api/courses"
+                        hx-target="#coursesGrid"
+                        hx-trigger="change"
+                        hx-include="[name='level']">
+                    <option value="">Всички нива</option>
+                    <option value="beginner">Начинаещ</option>
+                    <option value="intermediate">Среден</option>
+                    <option value="advanced">Напреднал</option>
+                </select>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <span class="text-gray-600">Сортиране:</span>
+                <select id="sortFilter" 
+                        class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                        hx-get="/api/courses"
+                        hx-target="#coursesGrid"
+                        hx-trigger="change"
+                        hx-include="[name='sort']">
+                    <option value="newest">Най-нови</option>
+                    <option value="oldest">Най-стари</option>
+                    <option value="price-low">Цена (ниска)</option>
+                    <option value="price-high">Цена (висока)</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Courses Grid Section -->
+<section class="py-12 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Loading indicator -->
+        <div id="loadingIndicator" class="text-center py-8" style="display: none;">
+            <div class="inline-flex items-center">
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-primary-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Зареждане на курсове...
+            </div>
+        </div>
+        
+        <!-- Courses Grid -->
+        <div id="coursesGrid" 
+             class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+             hx-get="/api/courses" 
+             hx-trigger="load"
+             hx-target="this"
+             hx-swap="innerHTML"
+             hx-indicator="#loadingIndicator">
+            <!-- Loading state -->
+            <div class="animate-pulse">
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="bg-gray-200 h-48"></div>
+                    <div class="p-6">
+                        <div class="h-4 bg-gray-200 rounded mb-2"></div>
+                        <div class="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
+                        <div class="h-4 bg-gray-200 rounded w-1/2"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="animate-pulse">
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="bg-gray-200 h-48"></div>
+                    <div class="p-6">
+                        <div class="h-4 bg-gray-200 rounded mb-2"></div>
+                        <div class="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
+                        <div class="h-4 bg-gray-200 rounded w-1/2"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="animate-pulse">
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="bg-gray-200 h-48"></div>
+                    <div class="p-6">
+                        <div class="h-4 bg-gray-200 rounded mb-2"></div>
+                        <div class="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
+                        <div class="h-4 bg-gray-200 rounded w-1/2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- No courses message -->
+        <div id="noCoursesMessage" class="text-center py-12" style="display: none;">
+            <div class="text-gray-500">
+                <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                <h3 class="text-lg font-medium text-gray-900 mb-2">Няма намерени курсове</h3>
+                <p class="text-gray-500">Опитайте да промените филтрите или се върнете по-късно.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Course Template (hidden) -->
+<template id="courseTemplate">
+    <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+        <div class="relative">
+            <img src="" alt="" class="w-full h-48 object-cover course-image">
+            <div class="absolute top-4 right-4">
+                <span class="bg-primary-600 text-white px-2 py-1 rounded-full text-xs font-medium course-category"></span>
+            </div>
+        </div>
+        <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-2 course-title"></h3>
+            <p class="text-gray-600 mb-4 course-description"></p>
+            <div class="flex items-center justify-between mb-4">
+                <span class="text-sm text-gray-500 course-level"></span>
+                <span class="text-sm text-gray-500 course-duration"></span>
+            </div>
+            <div class="flex items-center justify-between">
+                <span class="text-2xl font-bold text-primary-600 course-price"></span>
+                <a href="" class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors course-link">
+                    Детайли
+                </a>
+            </div>
+        </div>
+    </div>
+</template>
+
+@section Scripts {
+    <script>
+        // HTMX event handlers
+        document.addEventListener('htmx:beforeRequest', function(evt) {
+            document.getElementById('loadingIndicator').style.display = 'block';
+        });
+        
+        document.addEventListener('htmx:afterRequest', function(evt) {
+            document.getElementById('loadingIndicator').style.display = 'none';
+        });
+        
+        // Filter change handlers
+        document.getElementById('categoryFilter').addEventListener('change', function() {
+            const category = this.value;
+            const url = category ? `/api/courses/category/${category}` : '/api/courses';
+            
+            htmx.ajax('GET', url, {
+                target: '#coursesGrid',
+                swap: 'innerHTML'
+            });
+        });
+        
+        document.getElementById('levelFilter').addEventListener('change', function() {
+            const level = this.value;
+            // This would need to be implemented in the API
+            console.log('Level filter changed:', level);
+        });
+    </script>
+} 
