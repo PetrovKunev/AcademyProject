@@ -53,7 +53,7 @@
             var courses = ViewData["Courses"] as IEnumerable<Academy.Core.Models.Course>;
         }
         
-        <div id="coursesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div id="coursesGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8 justify-items-center">
             @if (courses != null && courses.Any())
             {
                 @foreach (var course in courses)
