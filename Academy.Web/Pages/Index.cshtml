@@ -2,7 +2,7 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Начало";
-    ViewData["Description"] = "Академия - Вашият партньор за професионално обучение и развитие на умения. Открийте нашите курсове по програмиране, дизайн и бизнес.";
+    ViewData["Description"] = "Академия Логос - Вашият партньор за обучение и развитие на умения. Открийте нашите курсове по програмиране, дизайн и бизнес, математика, български език.";
     ViewData["Keywords"] = "академия, курсове, обучение, програмиране, дизайн, бизнес, софия";
 }
 
@@ -11,10 +11,10 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <div class="text-center">
             <h1 class="text-4xl md:text-6xl font-bold mb-6">
-                Добре дошли в <span class="text-yellow-300">Академията</span>
+                Добре дошли в <span class="text-yellow-300">Академия Логос</span>
             </h1>
             <p class="text-xl md:text-2xl mb-8 text-primary-100 max-w-3xl mx-auto">
-                Вашият партньор за професионално обучение и развитие на умения. 
+                Вашият партньор за обучение и развитие на умения. 
                 Открийте курсове, които ще ви помогнат да постигнете вашите цели.
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
@@ -29,7 +29,7 @@
     </div>
     
     <!-- Decorative elements -->
-    <div class="absolute top-0 left-0 w-full h-full overflow-hidden">
+    <div class="absolute top-0 left-0 w-full h-full overflow-hidden" style="pointer-events: none;">
         <div class="absolute -top-40 -right-40 w-80 h-80 bg-primary-500 rounded-full opacity-20"></div>
         <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-yellow-400 rounded-full opacity-20"></div>
     </div>
@@ -48,8 +48,8 @@
         </div>
         
         <!-- Course Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" 
-             hx-get="/api/courses/featuredpartial" 
+        <div 
+             hx-get="/CoursesPartial/Featured" 
              hx-trigger="load"
              hx-target="this"
              hx-swap="innerHTML">
@@ -90,7 +90,7 @@
                 Защо да изберете нас?
             </h2>
             <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-                Ние предлагаме качествено обучение с експерти в областта
+                Ние предлагаме качествено обучение с експерти в областта на образованието.
             </p>
         </div>
         
@@ -112,7 +112,7 @@
                     </svg>
                 </div>
                 <h3 class="text-xl font-semibold text-gray-900 mb-2">Опитни преподаватели</h3>
-                <p class="text-gray-600">Нашите преподаватели са професионалисти с дългогодишен опит в индустрията.</p>
+                <p class="text-gray-600">Нашите преподаватели са професионалисти с дългогодишен опит в образователната сфера.</p>
             </div>
             
             <div class="text-center">

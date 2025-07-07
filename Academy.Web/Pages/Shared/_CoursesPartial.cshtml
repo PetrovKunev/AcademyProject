@@ -1,10 +1,10 @@
 @model IEnumerable<Academy.Core.Models.Course>
 @if (Model != null && Model.Any())
 {
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         @foreach (var course in Model)
         {
-            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow flex flex-col min-h-[420px]">
                 <div class="relative">
                     @if (!string.IsNullOrEmpty(course.ImageUrl))
                     {
@@ -22,17 +22,17 @@
                         <span class="bg-primary-600 text-white px-2 py-1 rounded-full text-xs font-medium">@course.Category</span>
                     </div>
                 </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-semibold text-gray-900 mb-2">@course.Title</h3>
-                    <p class="text-gray-600 mb-4">@course.Description</p>
+                <div class="p-6 flex flex-col flex-1">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2 line-clamp-2 h-14 overflow-hidden text-ellipsis">@course.Title</h3>
+                    <p class="text-gray-600 mb-4 flex-1 line-clamp-3 h-16 overflow-hidden text-ellipsis">@course.Description</p>
                     <div class="flex items-center justify-between mb-4">
-                        <span class="text-sm text-gray-500">@course.Level</span>
-                        <span class="text-sm text-gray-500">@course.Duration</span>
+                        @* <span class="text-sm text-gray-500">@course.Level</span> *@
+                        @* <span class="text-sm text-gray-500">@course.Duration</span> *@
                     </div>
-                    <div class="flex items-center justify-between">
-                        <span class="text-2xl font-bold text-primary-600">@course.Price.ToString("C")</span>
-                        <a href="/Courses/Details/@course.Id" class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors">
-                            Детайли
+                    <div class="flex items-center justify-between mt-auto">
+                        <span class="text-sm text-gray-600">Цената се определя според избраният пакет.</span>
+                        <a href="/Pricing" class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors">
+                            Виж ценообразуване
                         </a>
                     </div>
                 </div>

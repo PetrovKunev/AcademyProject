@@ -28,6 +28,21 @@ builder.Services.AddMemoryCache();
 // Add Response Caching
 builder.Services.AddResponseCaching();
 
+// Add CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigins", policy =>
+    {
+        var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>();
+        if (allowedOrigins != null && allowedOrigins.Length > 0)
+        {
+            policy.WithOrigins(allowedOrigins)
+                  .AllowAnyMethod()
+                  .AllowAnyHeader();
+        }
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -42,13 +57,15 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseResponseCaching();
 
+// Use CORS
+app.UseCors("AllowSpecificOrigins");
+
 app.UseRouting();
 
 app.UseAuthorization();
 
 app.MapStaticAssets();
-app.MapRazorPages()
-   .WithStaticAssets();
+app.MapRazorPages();
 
 app.MapControllers();
 

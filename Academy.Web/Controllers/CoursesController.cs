@@ -182,4 +182,41 @@ public class CoursesController : Controller
             .ToList();
         return PartialView("~/Pages/Shared/_CoursesPartial.cshtml", courses);
     }
+
+    [HttpGet("filtered")]
+    public async Task<IActionResult> GetFilteredCourses([FromQuery] string? category, [FromQuery] string? level, [FromQuery] string? sort)
+    {
+        try
+        {
+            var courses = await _courseService.GetActiveCoursesAsync();
+            
+            // Apply category filter
+            if (!string.IsNullOrEmpty(category))
+            {
+                courses = courses.Where(c => c.Category.Equals(category, StringComparison.OrdinalIgnoreCase));
+            }
+            
+            // Apply level filter
+            if (!string.IsNullOrEmpty(level))
+            {
+                courses = courses.Where(c => c.Level.Equals(level, StringComparison.OrdinalIgnoreCase));
+            }
+            
+            // Apply sorting
+            courses = sort?.ToLower() switch
+            {
+                "newest" => courses.OrderByDescending(c => c.CreatedAt),
+                "oldest" => courses.OrderBy(c => c.CreatedAt),
+                "price-low" => courses.OrderBy(c => c.Price),
+                "price-high" => courses.OrderByDescending(c => c.Price),
+                _ => courses.OrderByDescending(c => c.CreatedAt) // default sorting
+            };
+            
+            return PartialView("~/Pages/Shared/_CoursesPartial.cshtml", courses);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "An error occurred while filtering courses", error = ex.Message });
+        }
+    }
 } 

@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Курсове";
     ViewData["Description"] = "Разгледайте нашите курсове по програмиране, дизайн и бизнес. Намерете курса, който отговаря на вашите нужди.";
-    ViewData["Keywords"] = "курсове, програмиране, дизайн, бизнес, обучение, академия";
+    ViewData["Keywords"] = "курсове, програмиране, дизайн, бизнес, обучение, академия, математика, български език";
 }
 
 <!-- Header Section -->
@@ -24,43 +24,15 @@
         <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
             <div class="flex flex-wrap gap-4">
                 <select id="categoryFilter" 
+                        name="category"
                         class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                        hx-get="/api/courses"
+                        hx-get="/CoursesPartial/Filtered"
                         hx-target="#coursesGrid"
                         hx-trigger="change"
                         hx-include="[name='category']">
                     <option value="">Всички категории</option>
-                    <option value="programming">Програмиране</option>
-                    <option value="design">Дизайн</option>
-                    <option value="business">Бизнес</option>
-                    <option value="marketing">Маркетинг</option>
-                </select>
-                
-                <select id="levelFilter" 
-                        class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                        hx-get="/api/courses"
-                        hx-target="#coursesGrid"
-                        hx-trigger="change"
-                        hx-include="[name='level']">
-                    <option value="">Всички нива</option>
-                    <option value="beginner">Начинаещ</option>
-                    <option value="intermediate">Среден</option>
-                    <option value="advanced">Напреднал</option>
-                </select>
-            </div>
-            
-            <div class="flex items-center space-x-4">
-                <span class="text-gray-600">Сортиране:</span>
-                <select id="sortFilter" 
-                        class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                        hx-get="/api/courses"
-                        hx-target="#coursesGrid"
-                        hx-trigger="change"
-                        hx-include="[name='sort']">
-                    <option value="newest">Най-нови</option>
-                    <option value="oldest">Най-стари</option>
-                    <option value="price-low">Цена (ниска)</option>
-                    <option value="price-high">Цена (висока)</option>
+                    <option value="БЕЛ">БЕЛ</option>
+                    <option value="Математика">Математика</option>
                 </select>
             </div>
         </div>
@@ -81,9 +53,9 @@
             var courses = ViewData["Courses"] as IEnumerable<Academy.Core.Models.Course>;
         }
         
-        @if (courses != null && courses.Any())
-        {
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div id="coursesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            @if (courses != null && courses.Any())
+            {
                 @foreach (var course in courses)
                 {
                     <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
@@ -108,11 +80,11 @@
                             <h3 class="text-xl font-semibold text-gray-900 mb-2">@course.Title</h3>
                             <p class="text-gray-600 mb-4">@course.Description</p>
                             <div class="flex items-center justify-between mb-4">
-                                <span class="text-sm text-gray-500">@course.Level</span>
-                                <span class="text-sm text-gray-500">@course.Duration</span>
+                                @* <span class="text-sm text-gray-500">@course.Level</span> *@
+                                @* <span class="text-sm text-gray-500">@course.Duration</span> *@
                             </div>
                             <div class="flex items-center justify-between">
-                                <span class="text-2xl font-bold text-primary-600">@course.Price.ToString("C")</span>
+                                @* <span class="text-2xl font-bold text-primary-600">@course.Price.ToString("C")</span> *@
                                 <a href="/Courses/Details/@course.Id" class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors">
                                     Детайли
                                 </a>
@@ -120,20 +92,20 @@
                         </div>
                     </div>
                 }
-            </div>
-        }
-        else
-        {
-            <div class="text-center py-12">
-                <div class="text-gray-500">
-                    <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                    <h3 class="text-lg font-medium text-gray-900 mb-2">Няма намерени курсове</h3>
-                    <p class="text-gray-500">Моментно няма активни курсове. Моля, проверете отново по-късно.</p>
+            }
+            else
+            {
+                <div class="text-center py-12">
+                    <div class="text-gray-500">
+                        <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        <h3 class="text-lg font-medium text-gray-900 mb-2">Няма намерени курсове</h3>
+                        <p class="text-gray-500">Моментно няма активни курсове. Моля, проверете отново по-късно.</p>
+                    </div>
                 </div>
-            </div>
-        }
+            }
+        </div>
     </div>
 </section>
 
@@ -150,11 +122,11 @@
             <h3 class="text-xl font-semibold text-gray-900 mb-2 course-title"></h3>
             <p class="text-gray-600 mb-4 course-description"></p>
             <div class="flex items-center justify-between mb-4">
-                <span class="text-sm text-gray-500 course-level"></span>
-                <span class="text-sm text-gray-500 course-duration"></span>
+                @* <span class="text-sm text-gray-500 course-level"></span> *@
+                @* <span class="text-sm text-gray-500 course-duration"></span> *@
             </div>
             <div class="flex items-center justify-between">
-                <span class="text-2xl font-bold text-primary-600 course-price"></span>
+                @* <span class="text-2xl font-bold text-primary-600 course-price"></span> *@
                 <a href="" class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors course-link">
                     Детайли
                 </a>
@@ -163,20 +135,4 @@
     </div>
 </template>
 
-@section Scripts {
-    <script>
-        // Simple filter functionality (can be enhanced later)
-        document.getElementById('categoryFilter').addEventListener('change', function() {
-            // For now, just log the change. Can be enhanced with AJAX later
-            console.log('Category filter changed:', this.value);
-        });
-        
-        document.getElementById('levelFilter').addEventListener('change', function() {
-            console.log('Level filter changed:', this.value);
-        });
-        
-        document.getElementById('sortFilter').addEventListener('change', function() {
-            console.log('Sort filter changed:', this.value);
-        });
-    </script>
-} 
+ 

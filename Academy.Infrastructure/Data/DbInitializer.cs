@@ -19,109 +19,73 @@ public static class DbInitializer
         {
             new Course
             {
-                Title = "JavaScript за начинаещи",
-                Description = "Научете основите на JavaScript програмирането. Курсът покрива променливи, функции, обекти, масиви и DOM манипулация.",
-                Category = "programming",
-                Level = "beginner",
-                Duration = 40,
-                Price = 299.00m,
-                ImageUrl = "/images/courses/javascript-basics.jpg",
+                Title = "Математика - 5 клас",
+                Description = "Целогодишен курс по математика за 5 клас. Подготовка за отличен успех и стабилни знания.",
+                Category = "Математика",
+                Level = "",
+                Duration = 100,
+                Price = 350.00m,
+                ImageUrl = "",
                 IsActive = true,
                 CreatedAt = DateTime.UtcNow
             },
             new Course
             {
-                Title = "React.js - Пълно ръководство",
-                Description = "Научете React.js от основите до напреднали техники. Курсът включва хукове, контекст, роутинг и интеграция с API.",
-                Category = "programming",
-                Level = "intermediate",
-                Duration = 60,
-                Price = 499.00m,
-                ImageUrl = "/images/courses/react-complete.jpg",
+                Title = "Математика - 6 клас",
+                Description = "Целогодишен курс по математика за 6 клас. Задълбочено изучаване и упражнения.",
+                Category = "Математика",
+                Level = "",
+                Duration = 100,
+                Price = 370.00m,
+                ImageUrl = "",
                 IsActive = true,
                 CreatedAt = DateTime.UtcNow
             },
             new Course
             {
-                Title = "Node.js и Express.js",
-                Description = "Създайте сървърни приложения с Node.js и Express.js. Научете REST API, бази данни, аутентикация и deployment.",
-                Category = "programming",
-                Level = "intermediate",
-                Duration = 50,
-                Price = 449.00m,
-                ImageUrl = "/images/courses/node-express.jpg",
+                Title = "Математика - 7 клас /Подготовка за НВО/",
+                Description = "Интензивна подготовка по математика за НВО след 7 клас. Решаване на тестове и задачи.",
+                Category = "Математика",
+                Level = "",
+                Duration = 120,
+                Price = 420.00m,
+                ImageUrl = "",
                 IsActive = true,
                 CreatedAt = DateTime.UtcNow
             },
             new Course
             {
-                Title = "UX/UI Дизайн основи",
-                Description = "Научете принципите на UX/UI дизайна. Курсът покрива потребителски изследвания, wireframing, прототипиране и тестване.",
-                Category = "design",
-                Level = "beginner",
-                Duration = 45,
-                Price = 399.00m,
-                ImageUrl = "/images/courses/ux-ui-basics.jpg",
+                Title = "БЕЛ - 5 клас",
+                Description = "Целогодишен курс по български език и литература за 5 клас. Развитие на езикови и литературни умения.",
+                Category = "БЕЛ",
+                Level = "",
+                Duration = 100,
+                Price = 350.00m,
+                ImageUrl = "",
                 IsActive = true,
                 CreatedAt = DateTime.UtcNow
             },
             new Course
             {
-                Title = "Figma за дизайнери",
-                Description = "Овладейте Figma за създаване на модерни дизайни. Научете компоненти, стилове, прототипи и колаборация.",
-                Category = "design",
-                Level = "intermediate",
-                Duration = 35,
-                Price = 349.00m,
-                ImageUrl = "/images/courses/figma-design.jpg",
+                Title = "БЕЛ - 6 клас",
+                Description = "Целогодишен курс по български език и литература за 6 клас. Подготовка за отличен успех.",
+                Category = "БЕЛ",
+                Level = "",
+                Duration = 100,
+                Price = 370.00m,
+                ImageUrl = "",
                 IsActive = true,
                 CreatedAt = DateTime.UtcNow
             },
             new Course
             {
-                Title = "Управление на проекти",
-                Description = "Научете методики за управление на проекти. Курсът покрива Agile, Scrum, планиране, рискове и комуникация.",
-                Category = "business",
-                Level = "intermediate",
-                Duration = 55,
-                Price = 599.00m,
-                ImageUrl = "/images/courses/project-management.jpg",
-                IsActive = true,
-                CreatedAt = DateTime.UtcNow
-            },
-            new Course
-            {
-                Title = "Дигитален маркетинг",
-                Description = "Научете стратегии за дигитален маркетинг. Курсът включва SEO, социални мрежи, email маркетинг и аналитика.",
-                Category = "marketing",
-                Level = "beginner",
-                Duration = 40,
-                Price = 399.00m,
-                ImageUrl = "/images/courses/digital-marketing.jpg",
-                IsActive = true,
-                CreatedAt = DateTime.UtcNow
-            },
-            new Course
-            {
-                Title = "Python за data science",
-                Description = "Научете Python за анализ на данни. Курсът покрива pandas, numpy, matplotlib и машинно обучение.",
-                Category = "programming",
-                Level = "advanced",
-                Duration = 70,
-                Price = 699.00m,
-                ImageUrl = "/images/courses/python-data.jpg",
-                IsActive = true,
-                CreatedAt = DateTime.UtcNow
-            },
-            new Course
-            {
-                Title = "Предприемачество и стартиране на бизнес",
-                Description = "Научете как да стартирате и развивате собствен бизнес. Курсът покрива бизнес планове, финанси и стратегии.",
-                Category = "business",
-                Level = "beginner",
-                Duration = 50,
-                Price = 549.00m,
-                ImageUrl = "/images/courses/entrepreneurship.jpg",
+                Title = "БЕЛ - 7 клас /Подготовка за НВО/",
+                Description = "Интензивна подготовка по БЕЛ за НВО след 7 клас. Анализ на текстове и упражнения.",
+                Category = "БЕЛ",
+                Level = "",
+                Duration = 120,
+                Price = 420.00m,
+                ImageUrl = "",
                 IsActive = true,
                 CreatedAt = DateTime.UtcNow
             }
