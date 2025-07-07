@@ -13,12 +13,19 @@ public class CoursesModel : PageModel
         _courseService = courseService;
     }
 
-    public async Task OnGetAsync()
+    public async Task OnGetAsync(string? category)
     {
-        // Load courses directly in the page model
         try
         {
-            var courses = await _courseService.GetActiveCoursesAsync();
+            IEnumerable<Course> courses;
+            if (!string.IsNullOrWhiteSpace(category))
+            {
+                courses = await _courseService.GetCoursesByCategoryAsync(category);
+            }
+            else
+            {
+                courses = await _courseService.GetActiveCoursesAsync();
+            }
             ViewData["Courses"] = courses;
         }
         catch (Exception ex)

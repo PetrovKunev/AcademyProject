@@ -16,20 +16,9 @@ public class CoursesPartialController : Controller
     [HttpGet("Featured")]
     public async Task<IActionResult> Featured()
     {
-        var allowedTitles = new[]
-        {
-            "Математика - 5 клас",
-            "Математика - 6 клас",
-            "Математика - 7 клас /Подготовка за НВО/",
-            "БЕЛ - 5 клас",
-            "БЕЛ - 6 клас",
-            "БЕЛ - 7 клас /Подготовка за НВО/"
-        };
-        var allowedCategories = new[] { "Математика", "БЕЛ" };
         var courses = (await _courseService.GetActiveCoursesAsync())
-            .Where(c => allowedTitles.Contains(c.Title) && allowedCategories.Contains(c.Category))
-            .OrderBy(c => c.Category)
-            .ThenBy(c => c.Title)
+            .Where(c => c.Category == "Математика")
+            .OrderBy(c => c.Title)
             .ToList();
         return PartialView("~/Pages/Shared/_CoursesPartial.cshtml", courses);
     }
@@ -51,5 +40,15 @@ public class CoursesPartialController : Controller
             _ => courses.OrderByDescending(c => c.CreatedAt)
         };
         return PartialView("~/Pages/Shared/_CoursesPartial.cshtml", courses);
+    }
+
+    [HttpGet("FeaturedMath")]
+    public async Task<IActionResult> FeaturedMath()
+    {
+        var courses = (await _courseService.GetActiveCoursesAsync())
+            .Where(c => c.Category == "Математика")
+            .OrderBy(c => c.Title)
+            .ToList();
+        return PartialView("~/Pages/Shared/_FeaturedMathCoursesPartial.cshtml", courses);
     }
 } 
