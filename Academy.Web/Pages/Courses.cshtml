@@ -83,10 +83,12 @@
                                 @* <span class="text-sm text-gray-500">@course.Level</span> *@
                                 @* <span class="text-sm text-gray-500">@course.Duration</span> *@
                             </div>
-                            <div class="flex items-center justify-between">
-                                @* <span class="text-2xl font-bold text-primary-600">@course.Price.ToString("C")</span> *@
-                                <a href="/Courses/Details/@course.Id" class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors">
+                            <div class="flex items-center justify-between gap-2">
+                                <a href="/Courses/Details/@course.Id" class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors flex-1 text-center">
                                     Детайли
+                                </a>
+                                <a href="/Pricing" class="border border-primary-600 text-primary-600 px-4 py-2 rounded-lg hover:bg-primary-50 transition-colors flex-1 text-center">
+                                    Ценообразуване
                                 </a>
                             </div>
                         </div>

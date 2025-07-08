@@ -20,6 +20,7 @@ public class CoursesPartialController : Controller
             .Where(c => c.Category == "Математика")
             .OrderBy(c => c.Title)
             .ToList();
+        ViewData["ButtonType"] = "pricing";
         return PartialView("~/Pages/Shared/_CoursesPartial.cshtml", courses);
     }
 
@@ -39,6 +40,7 @@ public class CoursesPartialController : Controller
             "price-high" => courses.OrderByDescending(c => c.Price),
             _ => courses.OrderByDescending(c => c.CreatedAt)
         };
+        ViewData["ButtonType"] = "details";
         return PartialView("~/Pages/Shared/_CoursesPartial.cshtml", courses);
     }
 
