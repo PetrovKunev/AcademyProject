@@ -61,7 +61,7 @@ public static class DbInitializer
                 Level = "",
                 Duration = 100,
                 Price = 350.00m,
-                ImageUrl = "/images/courses/Bel_5.jpg",
+                ImageUrl = "/images/courses/BEL_5.jpg",
                 IsActive = true,
                 CreatedAt = DateTime.UtcNow
             },
@@ -73,7 +73,7 @@ public static class DbInitializer
                 Level = "",
                 Duration = 100,
                 Price = 370.00m,
-                ImageUrl = "/images/courses/Bel_6.jpg",
+                ImageUrl = "/images/courses/BEL_6.jpg",
                 IsActive = true,
                 CreatedAt = DateTime.UtcNow
             },
@@ -85,7 +85,7 @@ public static class DbInitializer
                 Level = "",
                 Duration = 120,
                 Price = 420.00m,
-                ImageUrl = "/images/courses/Bel_7.jpg",
+                ImageUrl = "/images/courses/BEL_7.jpg",
                 IsActive = true,
                 CreatedAt = DateTime.UtcNow
             }

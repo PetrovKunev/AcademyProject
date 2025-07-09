@@ -75,8 +75,16 @@ app.MapControllers();
 // Initialize database
 using (var scope = app.Services.CreateScope())
 {
-    var context = scope.ServiceProvider.GetRequiredService<AcademyDbContext>();
-    DbInitializer.Initialize(context);
+    try
+    {
+        var context = scope.ServiceProvider.GetRequiredService<AcademyDbContext>();
+        DbInitializer.Initialize(context);
+    }
+    catch (Exception ex)
+    {
+        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "Грешка при инициализиране на базата данни");
+    }
 }
 
 app.Run();
