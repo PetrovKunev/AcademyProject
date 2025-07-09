@@ -43,6 +43,9 @@ builder.Services.AddCors(options =>
     });
 });
 
+// Add Email Service
+builder.Services.AddScoped<Academy.Web.Services.EmailService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
