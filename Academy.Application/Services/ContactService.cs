@@ -1,5 +1,8 @@
 using Academy.Core.Interfaces;
 using Academy.Core.Models;
+using System.Net;
+using System.Net.Mail;
+using System;
 
 namespace Academy.Application.Services;
 

@@ -39,6 +39,7 @@ public class ContactModel : PageModel
         }
         catch (Exception ex)
         {
+            TempData["ErrorMessage"] = "Възникна грешка при изпращане на съобщението. Моля, опитайте отново по-късно.";
             ModelState.AddModelError("", "Грешка при изпращане на съобщението: " + ex.Message);
             return Page();
         }
