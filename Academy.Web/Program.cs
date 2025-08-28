@@ -6,21 +6,34 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configure configuration sources
+builder.Configuration
+    .SetBasePath(builder.Environment.ContentRootPath)
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+    .AddEnvironmentVariables();
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddControllers();
 
 // Add Entity Framework
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+Console.WriteLine($"Environment: {builder.Environment.EnvironmentName}");
+Console.WriteLine($"Connection String: {connectionString}");
+
 builder.Services.AddDbContext<AcademyDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(connectionString));
 
 // Add Repositories
 builder.Services.AddScoped<ICourseRepository, CourseRepository>();
 builder.Services.AddScoped<IContactRepository, ContactRepository>();
+builder.Services.AddScoped<IBlogPostRepository, BlogPostRepository>();
 
 // Add Services
 builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<IContactService, ContactService>();
+builder.Services.AddScoped<IBlogPostService, BlogPostService>();
 
 // Add Memory Cache
 builder.Services.AddMemoryCache();
@@ -72,19 +85,6 @@ app.MapRazorPages();
 
 app.MapControllers();
 
-// Initialize database
-using (var scope = app.Services.CreateScope())
-{
-    try
-    {
-        var context = scope.ServiceProvider.GetRequiredService<AcademyDbContext>();
-        DbInitializer.Initialize(context);
-    }
-    catch (Exception ex)
-    {
-        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "Грешка при инициализиране на базата данни");
-    }
-}
+
 
 app.Run();

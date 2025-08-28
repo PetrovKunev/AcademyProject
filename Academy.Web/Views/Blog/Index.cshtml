@@ -1,0 +1,278 @@
+@model IEnumerable<Academy.Core.Models.BlogPost>
+@{
+    var categories = ViewData["Categories"] as IEnumerable<string> ?? Enumerable.Empty<string>();
+    var tags = ViewData["Tags"] as IEnumerable<string> ?? Enumerable.Empty<string>();
+    var recentPosts = ViewData["RecentPosts"] as IEnumerable<Academy.Core.Models.BlogPost> ?? Enumerable.Empty<Academy.Core.Models.BlogPost>();
+    var popularPosts = ViewData["PopularPosts"] as IEnumerable<Academy.Core.Models.BlogPost> ?? Enumerable.Empty<Academy.Core.Models.BlogPost>();
+    var currentPage = (int)ViewData["CurrentPage"];
+    var totalPages = (int)ViewData["TotalPages"];
+    var totalPosts = (int)ViewData["TotalPosts"];
+}
+
+<div class="min-h-screen bg-gray-50">
+    <!-- Header Section -->
+    <section class="bg-gradient-to-r from-primary-600 to-primary-700 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">
+                Блог Академия Логос
+            </h1>
+            <p class="text-xl text-primary-100 max-w-3xl mx-auto">
+                Открийте полезни статии за обучение, програмиране, математика и български език от нашите експерти
+            </p>
+            
+            <!-- Search Bar -->
+            <div class="mt-8 max-w-2xl mx-auto">
+                <form action="/blog/search" method="get" class="flex">
+                    <input type="text" 
+                           name="q" 
+                           placeholder="Търсете в блога..." 
+                           class="flex-1 px-4 py-3 rounded-l-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                           value="@ViewData["SearchTerm"]">
+                    <button type="submit" 
+                            class="bg-yellow-400 text-gray-900 px-6 py-3 rounded-r-lg font-semibold hover:bg-yellow-300 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <!-- Main Content -->
+            <div class="lg:col-span-3">
+                @if (ViewData["SearchTerm"] != null)
+                {
+                    <div class="mb-8 p-4 bg-blue-50 border-l-4 border-blue-400 rounded">
+                        <p class="text-blue-800">
+                            <strong>Резултати от търсенето:</strong> Намерени са @totalPosts статии за "@ViewData["SearchTerm"]"
+                        </p>
+                    </div>
+                }
+                
+                @if (ViewData["Category"] != null)
+                {
+                    <div class="mb-8 p-4 bg-green-50 border-l-4 border-green-400 rounded">
+                        <p class="text-green-800">
+                            <strong>Категория:</strong> @ViewData["Category"] (@totalPosts статии)
+                        </p>
+                    </div>
+                }
+                
+                @if (ViewData["Tag"] != null)
+                {
+                    <div class="mb-8 p-4 bg-purple-50 border-l-4 border-purple-400 rounded">
+                        <p class="text-purple-800">
+                            <strong>Таг:</strong> @ViewData["Tag"] (@totalPosts статии)
+                        </p>
+                    </div>
+                }
+
+                @if (!Model.Any())
+                {
+                    <div class="text-center py-12">
+                        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        <h3 class="mt-2 text-sm font-medium text-gray-900">Няма намерени статии</h3>
+                        <p class="mt-1 text-sm text-gray-500">
+                            @if (ViewData["SearchTerm"] != null)
+                            {
+                                <span>Пробвайте с други ключови думи или разгледайте всички статии.</span>
+                            }
+                            else
+                            {
+                                <span>В момента няма публикувани статии.</span>
+                            }
+                        </p>
+                        @if (ViewData["SearchTerm"] != null)
+                        {
+                            <div class="mt-6">
+                                <a href="/blog" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700">
+                                    Вижте всички статии
+                                </a>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <!-- Blog Posts Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        @foreach (var post in Model)
+                        {
+                            <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                                @if (!string.IsNullOrEmpty(post.ImageUrl))
+                                {
+                                    <div class="aspect-w-16 aspect-h-9">
+                                        <img src="@post.ImageUrl" alt="@post.Title" class="w-full h-48 object-cover">
+                                    </div>
+                                }
+                                <div class="p-6">
+                                    <div class="flex items-center text-sm text-gray-500 mb-2">
+                                        @if (!string.IsNullOrEmpty(post.Category))
+                                        {
+                                            <a href="/blog/category/@post.Category" class="text-primary-600 hover:text-primary-700 font-medium">
+                                                @post.Category
+                                            </a>
+                                            <span class="mx-2">•</span>
+                                        }
+                                        <time datetime="@post.CreatedAt.ToString("yyyy-MM-dd")">
+                                            @post.CreatedAt.ToString("dd.MM.yyyy")
+                                        </time>
+                                    </div>
+                                    
+                                    <h2 class="text-xl font-bold text-gray-900 mb-3 hover:text-primary-600 transition-colors">
+                                        <a href="/blog/@post.Slug">@post.Title</a>
+                                    </h2>
+                                    
+                                    <p class="text-gray-600 mb-4 line-clamp-3">@post.Summary</p>
+                                    
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center space-x-2">
+                                            @if (!string.IsNullOrEmpty(post.Author))
+                                            {
+                                                <span class="text-sm text-gray-500">@post.Author</span>
+                                            }
+                                            <span class="text-sm text-gray-400">•</span>
+                                            <span class="text-sm text-gray-500">@post.ViewCount прегледа</span>
+                                        </div>
+                                        
+                                        <a href="/blog/@post.Slug" class="text-primary-600 hover:text-primary-700 font-medium text-sm">
+                                            Прочети повече →
+                                        </a>
+                                    </div>
+                                </div>
+                            </article>
+                        }
+                    </div>
+
+                    <!-- Pagination -->
+                    @if (totalPages > 1)
+                    {
+                        <div class="mt-12 flex justify-center">
+                            <nav class="flex items-center space-x-2">
+                                @if (currentPage > 1)
+                                {
+                                    <a href="?page=@(currentPage - 1)" class="px-3 py-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded">
+                                        ← Предишна
+                                    </a>
+                                }
+                                
+                                @for (int i = Math.Max(1, currentPage - 2); i <= Math.Min(totalPages, currentPage + 2); i++)
+                                {
+                                    if (i == currentPage)
+                                    {
+                                        <span class="px-3 py-2 bg-primary-600 text-white rounded">@i</span>
+                                    }
+                                    else
+                                    {
+                                        <a href="?page=@i" class="px-3 py-2 text-gray-700 hover:bg-gray-100 rounded">@i</a>
+                                    }
+                                }
+                                
+                                @if (currentPage < totalPages)
+                                {
+                                    <a href="?page=@(currentPage + 1)" class="px-3 py-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded">
+                                        Следваща →
+                                    </a>
+                                }
+                            </nav>
+                        </div>
+                    }
+                }
+            </div>
+
+            <!-- Sidebar -->
+            <div class="lg:col-span-1">
+                <!-- Categories -->
+                @if (categories.Any())
+                {
+                    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Категории</h3>
+                        <div class="space-y-2">
+                            @foreach (var category in categories)
+                            {
+                                <a href="/blog/category/@category" class="block text-gray-600 hover:text-primary-600 transition-colors">
+                                    @category
+                                </a>
+                            }
+                        </div>
+                    </div>
+                }
+
+                <!-- Tags -->
+                @if (tags.Any())
+                {
+                    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Тагове</h3>
+                        <div class="flex flex-wrap gap-2">
+                            @foreach (var tag in tags)
+                            {
+                                <a href="/blog/tag/@tag" class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-primary-100 hover:text-primary-700 transition-colors">
+                                    @tag
+                                </a>
+                            }
+                        </div>
+                    </div>
+                }
+
+                <!-- Recent Posts -->
+                @if (recentPosts.Any())
+                {
+                    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Последни статии</h3>
+                        <div class="space-y-4">
+                            @foreach (var post in recentPosts)
+                            {
+                                <div class="flex items-start space-x-3">
+                                    @if (!string.IsNullOrEmpty(post.ImageUrl))
+                                    {
+                                        <img src="@post.ImageUrl" alt="@post.Title" class="w-16 h-16 object-cover rounded">
+                                    }
+                                    <div class="flex-1 min-w-0">
+                                        <h4 class="text-sm font-medium text-gray-900 line-clamp-2">
+                                            <a href="/blog/@post.Slug" class="hover:text-primary-600">@post.Title</a>
+                                        </h4>
+                                        <p class="text-xs text-gray-500 mt-1">
+                                            @post.CreatedAt.ToString("dd.MM.yyyy")
+                                        </p>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+
+                <!-- Popular Posts -->
+                @if (popularPosts.Any())
+                {
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Популярни статии</h3>
+                        <div class="space-y-4">
+                            @foreach (var post in popularPosts)
+                            {
+                                <div class="flex items-start space-x-3">
+                                    @if (!string.IsNullOrEmpty(post.ImageUrl))
+                                    {
+                                        <img src="@post.ImageUrl" alt="@post.Title" class="w-16 h-16 object-cover rounded">
+                                    }
+                                    <div class="flex-1 min-w-0">
+                                        <h4 class="text-sm font-medium text-gray-900 line-clamp-2">
+                                            <a href="/blog/@post.Slug" class="hover:text-primary-600">@post.Title</a>
+                                        </h4>
+                                        <p class="text-xs text-gray-500 mt-1">
+                                            @post.ViewCount прегледа
+                                        </p>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
