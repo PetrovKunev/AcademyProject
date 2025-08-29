@@ -62,7 +62,10 @@ public class BlogController : Controller
         ViewData["CurrentPage"] = page;
         ViewData["TotalPages"] = totalPages;
         ViewData["TotalPosts"] = totalPosts;
-
+        
+        // Explicitly set the layout to ensure it's used
+        ViewData["Layout"] = "~/Views/Shared/_Layout.cshtml";
+        
         return View(pagedPosts);
     }
 
@@ -89,7 +92,10 @@ public class BlogController : Controller
         ViewData["PopularPosts"] = popularPosts;
         ViewData["Categories"] = categories;
         ViewData["Tags"] = tags;
-
+        
+        // Explicitly set the layout to ensure it's used
+        ViewData["Layout"] = "~/Views/Shared/_Layout.cshtml";
+        
         return View(post);
     }
 
@@ -112,6 +118,9 @@ public class BlogController : Controller
         ViewData["Tags"] = tags;
         ViewData["RecentPosts"] = recentPosts;
         ViewData["PopularPosts"] = popularPosts;
+        
+        // Explicitly set the layout to ensure it's used
+        ViewData["Layout"] = "~/Views/Shared/_Layout.cshtml";
 
         return View("Index", posts);
     }
@@ -135,6 +144,9 @@ public class BlogController : Controller
         ViewData["Tags"] = tags;
         ViewData["RecentPosts"] = recentPosts;
         ViewData["PopularPosts"] = popularPosts;
+        
+        // Explicitly set the layout to ensure it's used
+        ViewData["Layout"] = "~/Views/Shared/_Layout.cshtml";
 
         return View("Index", posts);
     }
@@ -162,6 +174,9 @@ public class BlogController : Controller
         ViewData["Tags"] = tags;
         ViewData["RecentPosts"] = recentPosts;
         ViewData["PopularPosts"] = popularPosts;
+        
+        // Explicitly set the layout to ensure it's used
+        ViewData["Layout"] = "~/Views/Shared/_Layout.cshtml";
 
         return View("Index", posts);
     }

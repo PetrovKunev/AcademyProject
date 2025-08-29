@@ -1,3 +1,6 @@
+@{
+    Layout = "_Layout";
+}
 @model Academy.Core.Models.BlogPost
 @{
     var recentPosts = ViewData["RecentPosts"] as IEnumerable<Academy.Core.Models.BlogPost> ?? Enumerable.Empty<Academy.Core.Models.BlogPost>();
@@ -6,9 +9,8 @@
     var tags = ViewData["Tags"] as IEnumerable<string> ?? Enumerable.Empty<string>();
 }
 
-<div class="min-h-screen bg-gray-50">
-    <!-- Article Header -->
-    <article class="bg-white">
+<!-- Article Header -->
+<article class="bg-white">
         <!-- Hero Image -->
         @if (!string.IsNullOrEmpty(Model.ImageUrl))
         {
@@ -229,4 +231,3 @@
             </a>
         </div>
     </div>
-</div>

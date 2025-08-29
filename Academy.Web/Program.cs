@@ -15,7 +15,19 @@ builder.Configuration
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddControllers();
+builder.Services.AddControllersWithViews(options =>
+{
+    // Ensure controllers use the same view engine as Razor Pages
+});
+
+// Configure Razor view engine for both Pages and Controllers
+builder.Services.Configure<Microsoft.AspNetCore.Mvc.Razor.RazorViewEngineOptions>(options =>
+{
+    options.ViewLocationFormats.Clear();
+    options.ViewLocationFormats.Add("/Views/{1}/{0}.cshtml");
+    options.ViewLocationFormats.Add("/Views/Shared/{0}.cshtml");
+    options.ViewLocationFormats.Add("/Pages/Shared/{0}.cshtml");
+});
 
 // Add Entity Framework
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
