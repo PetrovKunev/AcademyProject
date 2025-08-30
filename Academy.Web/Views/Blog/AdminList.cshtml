@@ -1,0 +1,180 @@
+@{
+    Layout = "_Layout";
+}
+@model IEnumerable<Academy.Core.Models.BlogPost>
+
+<!-- Header Section -->
+<section class="bg-gradient-to-r from-green-600 to-green-700 text-white py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">
+            Управление на статии
+        </h1>
+        <p class="text-xl text-green-100 max-w-3xl mx-auto">
+            Редактирайте и управлявайте всички блог статии
+        </p>
+    </div>
+</section>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Success Message -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="mb-6 p-4 bg-green-50 border-l-4 border-green-400 text-green-700 rounded">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    <!-- Actions Bar -->
+    <div class="mb-6 flex justify-between items-center">
+        <h2 class="text-2xl font-bold text-gray-900">Всички статии (@Model.Count())</h2>
+        <div class="flex space-x-3">
+            <a href="/blog/admin/create" 
+               class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+                Нова статия
+            </a>
+            <a href="/blog/admin" 
+               class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors">
+                ← Обратно към администрацията
+            </a>
+        </div>
+    </div>
+
+    <!-- Posts Table -->
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Статия
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Категория
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Статус
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Дата
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Действия
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    @if (Model.Any())
+                    {
+                        @foreach (var post in Model)
+                        {
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        @if (!string.IsNullOrEmpty(post.ImageUrl))
+                                        {
+                                            <div class="flex-shrink-0 h-12 w-12">
+                                                <img class="h-12 w-12 rounded-lg object-cover" src="@post.ImageUrl" alt="@post.Title">
+                                            </div>
+                                        }
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900">
+                                                <a href="/blog/@post.Slug" target="_blank" class="hover:text-blue-600">
+                                                    @post.Title
+                                                </a>
+                                            </div>
+                                            <div class="text-sm text-gray-500">
+                                                @(post.Summary?.Length > 100 ? post.Summary.Substring(0, 100) + "..." : post.Summary)
+                                            </div>
+                                            <div class="text-xs text-gray-400">
+                                                Автор: @post.Author
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                        @post.Category
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    @if (post.IsPublished)
+                                    {
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            <svg class="w-2 h-2 mr-1" fill="currentColor" viewBox="0 0 8 8">
+                                                <circle cx="4" cy="4" r="3" />
+                                            </svg>
+                                            Публикувана
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                            <svg class="w-2 h-2 mr-1" fill="currentColor" viewBox="0 0 8 8">
+                                                <circle cx="4" cy="4" r="3" />
+                                            </svg>
+                                            Чернова
+                                        </span>
+                                    }
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    @if (post.PublishedAt.HasValue)
+                                    {
+                                        <div>Публикувана: @post.PublishedAt.Value.ToString("dd.MM.yyyy")</div>
+                                    }
+                                    <div>Създадена: @post.CreatedAt.ToString("dd.MM.yyyy")</div>
+                                    @if (post.UpdatedAt.HasValue)
+                                    {
+                                        <div>Обновена: @post.UpdatedAt.Value.ToString("dd.MM.yyyy")</div>
+                                    }
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <div class="flex space-x-2">
+                                        <a href="/blog/admin/edit/@post.Id" 
+                                           class="text-blue-600 hover:text-blue-900 transition-colors">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                            </svg>
+                                        </a>
+                                        <a href="/blog/@post.Slug" target="_blank" 
+                                           class="text-green-600 hover:text-green-900 transition-colors">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="5" class="px-6 py-12 text-center text-gray-500">
+                                <div class="flex flex-col items-center">
+                                    <svg class="w-12 h-12 text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                    </svg>
+                                    <p class="text-lg font-medium mb-2">Няма статии</p>
+                                    <p class="text-sm">Създайте първата статия за да започнете</p>
+                                    <a href="/blog/admin/create" class="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors">
+                                        Създай първата статия
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Back to Admin -->
+    <div class="mt-8 text-center">
+        <a href="/blog/admin" class="text-gray-600 hover:text-gray-800 transition-colors">
+            ← Обратно към администрацията
+        </a>
+    </div>
+</div>

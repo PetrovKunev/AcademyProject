@@ -4,20 +4,23 @@
 @model Academy.Core.Models.BlogPost
 
 <!-- Header Section -->
-<section class="bg-gradient-to-r from-blue-600 to-blue-700 text-white py-16">
+<section class="bg-gradient-to-r from-yellow-600 to-yellow-700 text-white py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h1 class="text-4xl md:text-5xl font-bold mb-4">
-            Създаване на нова статия
+            Редактиране на статия
         </h1>
-        <p class="text-xl text-blue-100 max-w-3xl mx-auto">
-            Добавете ново съдържание в блога на Академия Логос
+        <p class="text-xl text-yellow-100 max-w-3xl mx-auto">
+            Обновете съдържанието на "@Model.Title"
         </p>
     </div>
 </section>
 
 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <div class="bg-white rounded-lg shadow-md p-8">
-        <form asp-action="AdminCreate" method="post">
+        <form asp-action="AdminEdit" method="post">
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="CreatedAt" />
+            <input type="hidden" asp-for="Slug" />
             
             <div asp-validation-summary="ModelOnly" class="mb-6 p-4 bg-red-50 border-l-4 border-red-400 text-red-700 rounded"></div>
             
@@ -28,7 +31,7 @@
                     <div>
                         <label asp-for="Title" class="block text-sm font-medium text-gray-700 mb-2">Заглавие *</label>
                         <input asp-for="Title" type="text" 
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                                placeholder="Въведете заглавието на статията">
                         <span asp-validation-for="Title" class="text-sm text-red-600"></span>
                     </div>
@@ -37,7 +40,7 @@
                     <div>
                         <label asp-for="Summary" class="block text-sm font-medium text-gray-700 mb-2">Кратко описание *</label>
                         <textarea asp-for="Summary" rows="3" 
-                                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                                   placeholder="Кратко описание на статията (максимум 500 символа)"></textarea>
                         <span asp-validation-for="Summary" class="text-sm text-red-600"></span>
                         <p class="text-xs text-gray-500 mt-1">Максимум 500 символа</p>
@@ -56,7 +59,7 @@
                             <button type="button" onclick="insertTag('em', 'Наклонен текст')" class="px-3 py-1 text-xs bg-gray-100 hover:bg-gray-200 rounded border">I</button>
                         </div>
                         <textarea asp-for="Content" rows="20" 
-                                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm"
+                                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent font-mono text-sm"
                                   placeholder="Въведете съдържанието на статията. Използвайте бутоните горе за HTML форматиране."></textarea>
                         <span asp-validation-for="Content" class="text-sm text-red-600"></span>
                         <p class="text-xs text-gray-500 mt-1">Можете да използвате HTML маркиране за форматиране</p>
@@ -69,7 +72,7 @@
                     <div>
                         <label asp-for="Category" class="block text-sm font-medium text-gray-700 mb-2">Категория *</label>
                         <select asp-for="Category" 
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
                             <option value="">Изберете категория</option>
                             <option value="Обучение">Обучение</option>
                             <option value="Математика">Математика</option>
@@ -85,8 +88,8 @@
                     <div>
                         <label asp-for="Author" class="block text-sm font-medium text-gray-700 mb-2">Автор</label>
                         <input asp-for="Author" type="text" 
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                               placeholder="Вашето име" value="Академия Логос">
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                               placeholder="Вашето име">
                         <span asp-validation-for="Author" class="text-sm text-red-600"></span>
                     </div>
 
@@ -94,17 +97,17 @@
                     <div>
                         <label asp-for="Slug" class="block text-sm font-medium text-gray-700 mb-2">URL Slug</label>
                         <input asp-for="Slug" type="text" 
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                                placeholder="url-slug-на-статията">
                         <span asp-validation-for="Slug" class="text-sm text-red-600"></span>
-                        <p class="text-xs text-gray-500 mt-1">Оставете празно за автоматично генериране</p>
+                        <p class="text-xs text-gray-500 mt-1">Внимание: промяната на slug-а може да наруши връзките</p>
                     </div>
 
                     <!-- Image URL -->
                     <div>
                         <label asp-for="ImageUrl" class="block text-sm font-medium text-gray-700 mb-2">URL на изображение</label>
                         <input asp-for="ImageUrl" type="url" 
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                                placeholder="https://example.com/image.jpg">
                         <span asp-validation-for="ImageUrl" class="text-sm text-red-600"></span>
                     </div>
@@ -113,7 +116,7 @@
                     <div>
                         <label class="flex items-center">
                             <input asp-for="IsPublished" type="checkbox" 
-                                   class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                                   class="h-4 w-4 text-yellow-600 focus:ring-yellow-500 border-gray-300 rounded">
                             <span class="ml-2 text-sm text-gray-700">Публикувай веднага</span>
                         </label>
                     </div>
@@ -126,7 +129,7 @@
                             <div>
                                 <label asp-for="MetaTitle" class="block text-sm font-medium text-gray-700 mb-2">Meta заглавие</label>
                                 <input asp-for="MetaTitle" type="text" 
-                                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                                        placeholder="SEO заглавие (по-добре от оригиналното)">
                                 <span asp-validation-for="MetaTitle" class="text-sm text-red-600"></span>
                             </div>
@@ -134,7 +137,7 @@
                             <div>
                                 <label asp-for="MetaDescription" class="block text-sm font-medium text-gray-700 mb-2">Meta описание</label>
                                 <textarea asp-for="MetaDescription" rows="2" 
-                                          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                                           placeholder="SEO описание (максимум 300 символа)"></textarea>
                                 <span asp-validation-for="MetaDescription" class="text-sm text-red-600"></span>
                                 <p class="text-xs text-gray-500 mt-1">Максимум 300 символа</p>
@@ -143,10 +146,29 @@
                             <div>
                                 <label asp-for="MetaKeywords" class="block text-sm font-medium text-gray-700 mb-2">Meta ключови думи</label>
                                 <input asp-for="MetaKeywords" type="text" 
-                                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
                                        placeholder="ключова дума 1, ключова дума 2, ключова дума 3">
                                 <span asp-validation-for="MetaKeywords" class="text-sm text-red-600"></span>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Post Info -->
+                    <div class="border-t pt-6">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Информация за статията</h3>
+                        
+                        <div class="space-y-2 text-sm text-gray-600">
+                            <div><strong>ID:</strong> @Model.Id</div>
+                            <div><strong>Създадена:</strong> @Model.CreatedAt.ToString("dd.MM.yyyy HH:mm")</div>
+                            @if (Model.UpdatedAt.HasValue)
+                            {
+                                <div><strong>Обновена:</strong> @Model.UpdatedAt.Value.ToString("dd.MM.yyyy HH:mm")</div>
+                            }
+                            @if (Model.PublishedAt.HasValue)
+                            {
+                                <div><strong>Публикувана:</strong> @Model.PublishedAt.Value.ToString("dd.MM.yyyy HH:mm")</div>
+                            }
+                            <div><strong>Прегледи:</strong> @Model.ViewCount</div>
                         </div>
                     </div>
                 </div>
@@ -154,13 +176,13 @@
 
             <!-- Submit Buttons -->
             <div class="mt-8 flex justify-end space-x-4">
-                <a href="/blog/admin" 
+                <a href="/blog/admin/list" 
                    class="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors">
                     Отказ
                 </a>
                 <button type="submit" 
-                        class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                    Създай статия
+                        class="px-6 py-3 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors">
+                    Обнови статията
                 </button>
             </div>
         </form>
@@ -169,32 +191,6 @@
 
 @section Scripts {
     <script>
-        // Auto-generate slug from title
-        document.getElementById('Title').addEventListener('input', function() {
-            const title = this.value;
-            const slugField = document.getElementById('Slug');
-            
-            if (slugField.value === '') {
-                const slug = title.toLowerCase()
-                    .replace(/[а-я]/g, function(char) {
-                        const map = {
-                            'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'e',
-                            'ж': 'zh', 'з': 'z', 'и': 'i', 'й': 'y', 'к': 'k', 'л': 'l',
-                            'м': 'm', 'н': 'n', 'о': 'o', 'п': 'p', 'р': 'r', 'с': 's',
-                            'т': 't', 'у': 'u', 'ф': 'f', 'х': 'h', 'ц': 'ts', 'ч': 'ch',
-                            'ш': 'sh', 'щ': 'sht', 'ъ': 'a', 'ь': 'y', 'ю': 'yu', 'я': 'ya'
-                        };
-                        return map[char] || char;
-                    })
-                    .replace(/[^a-z0-9\s-]/g, '')
-                    .replace(/\s+/g, '-')
-                    .replace(/-+/g, '-')
-                    .trim('-');
-                
-                slugField.value = slug;
-            }
-        });
-
         // Insert HTML tags
         function insertTag(tag, placeholder) {
             const contentField = document.getElementById('Content');
@@ -219,14 +215,5 @@
             contentField.focus();
             contentField.setSelectionRange(start + insertText.length, start + insertText.length);
         }
-
-        // Set category from URL parameter if present
-        window.addEventListener('load', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const category = urlParams.get('category');
-            if (category) {
-                document.getElementById('Category').value = category;
-            }
-        });
     </script>
 }
