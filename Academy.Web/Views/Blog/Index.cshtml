@@ -29,7 +29,7 @@
                            name="q" 
                            placeholder="Търсете в блога..." 
                            class="flex-1 px-4 py-3 rounded-l-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                           value="@ViewData["SearchTerm"]">
+                           value="@(ViewData["SearchTerm"] ?? "")">
                     <button type="submit" 
                             class="bg-yellow-400 text-gray-900 px-6 py-3 rounded-r-lg font-semibold hover:bg-yellow-300 transition-colors">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -37,6 +37,8 @@
                         </svg>
                     </button>
                 </form>
+                
+
             </div>
         </div>
     </section>

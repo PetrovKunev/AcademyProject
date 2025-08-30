@@ -53,6 +53,15 @@ builder.Services.AddMemoryCache();
 // Add Response Caching
 builder.Services.AddResponseCaching();
 
+// Add Session Support
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 // Add CORS
 builder.Services.AddCors(options =>
 {
@@ -84,6 +93,9 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseResponseCaching();
+
+// Use Session
+app.UseSession();
 
 // Use CORS
 app.UseCors("AllowSpecificOrigins");

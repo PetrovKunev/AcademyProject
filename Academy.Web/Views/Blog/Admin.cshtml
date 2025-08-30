@@ -1,0 +1,124 @@
+@{
+    Layout = "_Layout";
+}
+
+<!-- Header Section -->
+<section class="bg-gradient-to-r from-gray-800 to-gray-900 text-white py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">
+            Администрация на блога
+        </h1>
+        <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+            Управление на статии, категории и съдържание
+        </p>
+    </div>
+</section>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Success Message -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="mb-6 p-4 bg-green-50 border-l-4 border-green-400 text-green-700 rounded">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    <!-- Admin Actions Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Create New Post -->
+        <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+            <div class="text-center">
+                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-md bg-blue-100 text-blue-600 mb-4">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                    </svg>
+                </div>
+                <h3 class="text-lg font-medium text-gray-900 mb-2">Създай нова статия</h3>
+                <p class="text-sm text-gray-500 mb-4">Добавете ново съдържание в блога</p>
+                <a href="/blog/admin/create?username=admin&password=academy2024" 
+                   class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors">
+                    Създай статия
+                </a>
+            </div>
+        </div>
+
+        <!-- Manage Posts -->
+        <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+            <div class="text-center">
+                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-md bg-green-100 text-green-600 mb-4">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                    </svg>
+                </div>
+                <h3 class="text-lg font-medium text-gray-900 mb-2">Управлявай статии</h3>
+                <p class="text-sm text-gray-500 mb-4">Редактирайте и управлявайте съществуващи статии</p>
+                <a href="/blog/admin/list?username=admin&password=academy2024" 
+                   class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 transition-colors">
+                    Виж всички статии
+                </a>
+            </div>
+        </div>
+
+        <!-- Blog Overview -->
+        <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+            <div class="text-center">
+                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-md bg-purple-100 text-purple-600 mb-4">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                </div>
+                <h3 class="text-lg font-medium text-gray-900 mb-2">Преглед на блога</h3>
+                <p class="text-sm text-gray-500 mb-4">Вижте статистики и обща информация</p>
+                <a href="/blog" 
+                   class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors">
+                    Виж публичния блог
+                </a>
+            </div>
+        </div>
+
+        <!-- Logout -->
+        <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+            <div class="text-center">
+                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-md bg-red-100 text-red-600 mb-4">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                </div>
+                <h3 class="text-lg font-medium text-gray-900 mb-2">Изход</h3>
+                <p class="text-sm text-gray-500 mb-4">Излезте от административния панел</p>
+                <form asp-action="AdminLogout" method="post" class="inline">
+                    <button type="submit" 
+                            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 transition-colors">
+                        Излез
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="mt-12 bg-white rounded-lg shadow-md p-6">
+        <h3 class="text-lg font-medium text-gray-900 mb-4">Бързи действия</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <a href="/blog/admin/create?username=admin&password=academy2024&category=Обучение" 
+               class="p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                <span class="text-sm font-medium text-gray-900">➕ Статия в "Обучение"</span>
+            </a>
+            <a href="/blog/admin/create?username=admin&password=academy2024&category=Математика" 
+               class="p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                <span class="text-sm font-medium text-gray-900">➕ Статия в "Математика"</span>
+            </a>
+            <a href="/blog/admin/create?username=admin&password=academy2024&category=Програмиране" 
+               class="p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                <span class="text-sm font-medium text-gray-900">➕ Статия в "Програмиране"</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Back to Blog -->
+    <div class="mt-8 text-center">
+        <a href="/blog" class="text-gray-600 hover:text-gray-800 transition-colors">
+            ← Обратно към блога
+        </a>
+    </div>
+</div>

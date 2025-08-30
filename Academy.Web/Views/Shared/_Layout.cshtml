@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Академия Логос</title>
+    <title>@(ViewData["Title"] ?? "Академия Логос")</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -34,12 +34,24 @@
     </script>
     
     <!-- SEO Meta Tags -->
-    <meta name="description" content="@ViewData["Description"]" />
-    <meta name="keywords" content="@ViewData["Keywords"]" />
+    @if (ViewData["Description"] != null)
+    {
+        <meta name="description" content="@ViewData["Description"]" />
+    }
+    @if (ViewData["Keywords"] != null)
+    {
+        <meta name="keywords" content="@ViewData["Keywords"]" />
+    }
     
     <!-- Open Graph Tags -->
-    <meta property="og:title" content="@ViewData["Title"]" />
-    <meta property="og:description" content="@ViewData["Description"]" />
+    @if (ViewData["Title"] != null)
+    {
+        <meta property="og:title" content="@ViewData["Title"]" />
+    }
+    @if (ViewData["Description"] != null)
+    {
+        <meta property="og:description" content="@ViewData["Description"]" />
+    }
     <meta property="og:type" content="website" />
     <meta property="og:url" content="@Context.Request.Scheme://@Context.Request.Host@Context.Request.Path" />
     
@@ -160,6 +172,16 @@
             
             <div class="mt-8 pt-8 border-t border-gray-700 text-center text-gray-300">
                 <p>&copy; @DateTime.Now.Year Академия Логос. Всички права запазени.  - <a href="https://kunev.dev" class="text-white hover:text-gray-300" target="_blank">kunev.dev</a></p>
+                <!-- Вход за администратори -->
+                <div class="mt-4">
+                    <a href="/blog/admin/login" 
+                       class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-300 bg-gray-700 hover:bg-gray-600 hover:text-white rounded-md transition-colors duration-200">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                        Вход за администратори
+                    </a>
+                </div>
             </div>
         </div>
     </footer>
