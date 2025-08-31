@@ -15,10 +15,7 @@ builder.Configuration
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddControllersWithViews(options =>
-{
-    // Ensure controllers use the same view engine as Razor Pages
-});
+builder.Services.AddControllersWithViews();
 
 // Configure Razor view engine for both Pages and Controllers
 builder.Services.Configure<Microsoft.AspNetCore.Mvc.Razor.RazorViewEngineOptions>(options =>
@@ -31,8 +28,10 @@ builder.Services.Configure<Microsoft.AspNetCore.Mvc.Razor.RazorViewEngineOptions
 
 // Add Entity Framework
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-Console.WriteLine($"Environment: {builder.Environment.EnvironmentName}");
-Console.WriteLine($"Connection String: {connectionString}");
+if (string.IsNullOrEmpty(connectionString))
+{
+    throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+}
 
 builder.Services.AddDbContext<AcademyDbContext>(options =>
     options.UseSqlServer(connectionString));
@@ -60,6 +59,7 @@ builder.Services.AddSession(options =>
     options.IdleTimeout = TimeSpan.FromMinutes(30);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
+    options.Cookie.SecurePolicy = builder.Environment.IsProduction() ? CookieSecurePolicy.Always : CookieSecurePolicy.None;
 });
 
 // Add CORS
@@ -86,7 +86,6 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -101,14 +100,10 @@ app.UseSession();
 app.UseCors("AllowSpecificOrigins");
 
 app.UseRouting();
-
 app.UseAuthorization();
 
 app.MapStaticAssets();
 app.MapRazorPages();
-
 app.MapControllers();
-
-
 
 app.Run();
